@@ -97,6 +97,9 @@ class MyApp extends StatelessWidget {
                       }
                     },
                     controller: urlController,
+                    decoration: new InputDecoration(
+                          labelText: 'Continuum Instance'
+                    )
                   ),
                   TextFormField(
                     validator: (value) {
@@ -105,6 +108,10 @@ class MyApp extends StatelessWidget {
                       }
                     },
                     controller: tokenController,
+                    obscureText: true,
+                    decoration: new InputDecoration(
+                          labelText: 'Authentication Token'
+                    )
                   ),
 
                   Padding(
@@ -127,40 +134,26 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    Widget textSection = Center(
-      child: Padding(
-        padding: new EdgeInsets.only(top:60.0),
-          child: Text(
-            '''
-            Test
-            ''',
-            softWrap: true,
-          )
-
-      )
-      ,
-    );
-
     return MaterialApp(
-      title: 'Continuum',
+      title: 'Login',
       home: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text('Continuum'),
+          title: new Center(child: new Text('Login', textAlign: TextAlign.center)),
         ),
         body: ListView(
           children: [
             new Padding(
               padding: new EdgeInsets.only(left: 60.0, top: 60.0, right: 60.0, bottom: 0.0),
-              child: new Image.asset(
+              child: new Column(
+                  children: <Widget>[new Image.asset(
                   'images/continuum-logo.jpg',
                   fit: BoxFit.cover,
                   alignment: Alignment.center,
-              )
+              )])
             ),
             titleSection,
             loginSection,
-            textSection,
           ],
         ),
       ),

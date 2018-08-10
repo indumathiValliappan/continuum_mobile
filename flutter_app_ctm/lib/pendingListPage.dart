@@ -21,7 +21,7 @@ class PendingListPage extends State<MyGetHttpData> {
         child: new Scaffold(
           key: _scaffoldKey,
           appBar: new AppBar(
-            title: new Text("My Activities"),
+            title: new Center(child: new Text('My Activities', textAlign: TextAlign.center)),
               actions: <Widget>[
       new PopupMenuButton<String>(
           onSelected: (String value) {
