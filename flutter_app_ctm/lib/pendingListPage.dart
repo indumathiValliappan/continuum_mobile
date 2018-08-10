@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app_ctm/PendingActivity.dart';
+import 'package:flutter_app_ctm/main.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyGetHttpData extends StatefulWidget {
   @override
@@ -12,13 +14,37 @@ class MyGetHttpData extends StatefulWidget {
 
 class PendingListPage extends State<MyGetHttpData> {
   List<PendingActivity> data;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return new WillPopScope(
         child: new Scaffold(
+          key: _scaffoldKey,
           appBar: new AppBar(
             title: new Text("My Activities"),
+              actions: <Widget>[
+      new PopupMenuButton<String>(
+          onSelected: (String value) {
+            _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text(value)));
+            if (value == 'Logout') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyApp()),
+              );
+            }
+          },
+          itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+            const PopupMenuItem<String>(
+                value: 'Logout',
+                child: Text('Logout')
+            ),
+            const PopupMenuItem<String>(
+                value: 'Settings',
+                child: Text('Settings')
+            )
+              ]
           ),
+          ]),
           // Create a Listview and load the data when available
           body: new ListView.builder(
               itemCount: data == null ? 0 : data.length,
@@ -35,7 +61,7 @@ class PendingListPage extends State<MyGetHttpData> {
                               children: <Widget>[
                                 new ListTile(
                                   title: new Text(
-                                    data[index].name,
+                                    data[index].name + ' - ' + data[index].phase_name,
                                     style: new TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   subtitle: new Text(
@@ -53,7 +79,7 @@ class PendingListPage extends State<MyGetHttpData> {
                                       new Padding(
                                           padding:const EdgeInsets.only(left: 20.0),
                                           child:
-                                          new Text(data[index].phase_name,
+                                          new Text(data[index].full_version,
                                               textAlign: TextAlign.center,
                                               style: new TextStyle(fontSize: 16.0))
                                       ),
@@ -63,14 +89,18 @@ class PendingListPage extends State<MyGetHttpData> {
                                           tooltip: 'Approve',
                                           color: Colors.green,
                                           iconSize: 30.0,
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            setActivityStatus("success", index);
+                                          },
                                         ),
                                         new IconButton(
                                           icon: new Icon(Icons.clear),
                                           tooltip: 'Reject',
                                           iconSize: 30.0,
                                           color: Colors.red,
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            setActivityStatus("failure", index);
+                                          },
                                         )
                                       ]),
                                     ],
@@ -84,15 +114,51 @@ class PendingListPage extends State<MyGetHttpData> {
                 );
               }),
         )
-        , onWillPop: () { return;});
+        , onWillPop: () {
+        return getOnWillPop();});
+  }
+
+  Future<bool> getOnWillPop() async {
+    return false;
+  }
+
+  Future<String> setActivityStatus(String status, index) async {
+    final prefs = await SharedPreferences.getInstance();
+    print(data[index]);
+    print(status);
+    final instanceUrl = prefs.get("instanceUrl");
+    final token = prefs.get("token");
+
+    final response = await http.get(
+        instanceUrl+':8080/api/set_activity_status?token='+token+'&revision_id='+data[index].revision_id+'&activity_id='+data[index].id+'&status='+status+'&reason=""&name='+data[index].name+'&phase_name='+data[index].phase_name,
+        headers: {
+          "Content-Type": "application/json",
+        });
+    print(instanceUrl+':8080/api/set_activity_status?token='+token+'&revision_id='+data[index].revision_id+'&activity_id='+data[index].id+'&status='+status+'&reason=test&name='+data[index].name+'&phase_name='+data[index].phase_name+'&package_id='+data[index].package_id);
+    if (response.statusCode == 200) {
+      // If server returns an OK response, parse the JSON
+      var data = json.decode(response.body)['Response'];
+      print(data);
+     // fetchPendingList();
+
+      return "successful";
+    } else {
+      // If that response was not OK, throw an error.
+      throw Exception('Failed to load post');
+    }
   }
 
   Future<String> fetchPendingList() async {
+    print('fetching');
+    final prefs = await SharedPreferences.getInstance();
+    final instanceUrl = prefs.get("instanceUrl");
+    final token = prefs.get("token");
+
     final response = await http.get(
-        'http://cu057.cloud.maa.collab.net:8080/api/list_pending_activities',
+        instanceUrl+':8080/api/list_pending_activities',
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Token 5b6924a166c708309d0db3db"
+          "Authorization": "Token "+token
         });
 
     if (response.statusCode == 200) {

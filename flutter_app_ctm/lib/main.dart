@@ -14,11 +14,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   //debugPaintSizeEnabled = true;
   runApp(new MaterialApp(
-  home: new MyApp()));
+  home: new MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController urlController = new TextEditingController();
   TextEditingController tokenController = new TextEditingController();
   @override
@@ -63,10 +65,6 @@ class MyApp extends StatelessWidget {
     Future onButtonClick() {
       if (_formKey.currentState.validate()) {
         // If the form is valid, we want to show a Snackbar
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MyGetHttpData()),
-        );
         validateToken().then((result) {
           if(result == 'success') {
             storeInstanceAndToken(urlController.text, tokenController.text);
@@ -75,9 +73,7 @@ class MyApp extends StatelessWidget {
               MaterialPageRoute(builder: (context) => MyGetHttpData()),
             );
           } else {
-            final snackBar = SnackBar(content: Text('Error SnackBar!'));
-           // Find the Scaffold in the Widget tree and use it to show a SnackBar
-          //  Scaffold.of(context).showSnackBar(snackBar);
+            _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text("Invalid instance or token")));
           }
           });
           }
@@ -148,6 +144,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Continuum',
       home: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: Text('Continuum'),
         ),
@@ -156,9 +153,9 @@ class MyApp extends StatelessWidget {
             new Padding(
               padding: new EdgeInsets.only(left: 60.0, top: 60.0, right: 60.0, bottom: 0.0),
               child: new Image.asset(
-                  'images/collabnet-versionone.jpg',
+                  'images/continuum-logo.jpg',
                   fit: BoxFit.cover,
-                  alignment: Alignment.center
+                  alignment: Alignment.center,
               )
             ),
             titleSection,
