@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_ctm/PendingActivity.dart';
 import 'package:flutter_app_ctm/main.dart';
+import 'package:flutter_app_ctm/settings.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,11 +26,15 @@ class PendingListPage extends State<MyGetHttpData> {
               actions: <Widget>[
       new PopupMenuButton<String>(
           onSelected: (String value) {
-            _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text(value)));
             if (value == 'Logout') {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => MyApp()),
+              );
+            } else if (value == 'Settings') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
               );
             }
           },
@@ -149,7 +154,6 @@ class PendingListPage extends State<MyGetHttpData> {
   }
 
   Future<String> fetchPendingList() async {
-    print('fetching');
     final prefs = await SharedPreferences.getInstance();
     final instanceUrl = prefs.get("instanceUrl");
     final token = prefs.get("token");
@@ -166,6 +170,7 @@ class PendingListPage extends State<MyGetHttpData> {
       Iterable data = json.decode(response.body)['Response'];
       List<PendingActivity> activites =
           data.map((activity) => PendingActivity.fromJson(activity)).toList();
+      this.fetchPendingList();
       setState(() {
         // Get the JSON data
         // Extract the required part and assign it to the global variable named data
