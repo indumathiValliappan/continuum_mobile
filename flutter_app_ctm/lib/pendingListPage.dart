@@ -144,7 +144,13 @@ class PendingListPage extends State<MyGetHttpData> {
       // If server returns an OK response, parse the JSON
       var data = json.decode(response.body)['Response'];
       print(data);
-     // fetchPendingList();
+      fetchPendingList();
+      var statusMessage;
+      if (status == 'success') {
+        _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text("Approved activity")));
+      } else if (status == 'failure') {
+        _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text("Rejected activity")));
+      }
 
       return "successful";
     } else {
@@ -170,7 +176,7 @@ class PendingListPage extends State<MyGetHttpData> {
       Iterable data = json.decode(response.body)['Response'];
       List<PendingActivity> activites =
           data.map((activity) => PendingActivity.fromJson(activity)).toList();
-      this.fetchPendingList();
+      // this.fetchPendingList();
       setState(() {
         // Get the JSON data
         // Extract the required part and assign it to the global variable named data
