@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_ctm/pendingListPage.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 
 void main() {
@@ -53,16 +54,25 @@ class MyApp extends StatelessWidget {
       }
     }
 
-    void onButtonClick() {
-      print(urlController.text);
+    Future storeInstanceAndToken(instanceUrl, token) async {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString("instanceUrl", instanceUrl);
+      prefs.setString("token", token);
+    }
+
+    Future onButtonClick() {
       if (_formKey.currentState.validate()) {
         // If the form is valid, we want to show a Snackbar
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MyGetHttpData()),
+        );
         validateToken().then((result) {
-          print(result);
           if(result == 'success') {
+            storeInstanceAndToken(urlController.text, tokenController.text);
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PendingListPage()),
+              MaterialPageRoute(builder: (context) => MyGetHttpData()),
             );
           } else {
             final snackBar = SnackBar(content: Text('Error SnackBar!'));
@@ -72,8 +82,6 @@ class MyApp extends StatelessWidget {
           });
           }
     }
-
-
 
     Widget loginSection = new Padding(
       padding: new EdgeInsets.only(left: 60.0, right: 60.0, top: 0.0, bottom: 0.0),
