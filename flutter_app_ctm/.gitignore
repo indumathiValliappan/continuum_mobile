@@ -5,5 +5,8 @@
 .pub/
 
 build/
+.idea/*.*
+local.properties
+
 
 .flutter-plugins

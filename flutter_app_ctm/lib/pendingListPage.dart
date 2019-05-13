@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app_ctm/PendingActivity.dart';
+import 'package:flutter_app_ctm/ProgressionsList.dart';
 import 'package:flutter_app_ctm/main.dart';
 import 'package:flutter_app_ctm/settings.dart';
 import 'package:http/http.dart' as http;
@@ -37,6 +38,12 @@ class PendingListPage extends State<MyGetHttpData> {
                 MaterialPageRoute(builder: (context) => LoginPage()),
               );
             }
+            else if (value == 'Progressions') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProgressionsList()),
+              );
+            }
           },
           itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
             const PopupMenuItem<String>(
@@ -46,6 +53,10 @@ class PendingListPage extends State<MyGetHttpData> {
             const PopupMenuItem<String>(
                 value: 'Settings',
                 child: Text('Settings')
+            ),
+            const PopupMenuItem<String>(
+                value: 'Progressions',
+                child: Text('Progressions')
             )
               ]
           ),
@@ -124,7 +135,7 @@ class PendingListPage extends State<MyGetHttpData> {
   }
 
   Future<bool> getOnWillPop() async {
-    return false;
+    return true;
   }
 
   Future<String> setActivityStatus(String status, index) async {
