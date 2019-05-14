@@ -257,53 +257,114 @@ class ProgressionsList extends StatelessWidget {
     ]
   };
 
-
   @override
   Widget build(BuildContext context) {
     var array = [];
-    getProg.forEach((key,value) => {
-      if (key == 'phases')
-        for (var val in value)
-          array.add(val["name"]),
-    });
+    getProg.forEach((key, value) => {
+          if (key == 'phases') for (var val in value) array.add(val["name"]),
+        });
     return new Scaffold(
       appBar: new AppBar(
         title: Text('Progressions'),
       ),
-        body: CarouselSlider(
-          height: 900.0,
-          enableInfiniteScroll: false,
-          enlargeCenterPage: true,
-          items: array.map((i) {
-            return Builder(
-              builder: (BuildContext context) {
-                return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                    decoration: BoxDecoration(
-                        color: Colors.white
-                    ),
-                    child: ListView(
-                      padding: const EdgeInsets.all(8.0),
-                      children: <Widget>[
-                        new Text(i,
-                    style: new TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+      body: CarouselSlider(
+        height: 900.0,
+        enableInfiniteScroll: false,
+        enlargeCenterPage: true,
+        items: array.map((i) {
+          return Builder(
+            builder: (BuildContext context) {
+              return Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  decoration: BoxDecoration(color: Colors.white),
+                  child: ListView(
+                    padding: const EdgeInsets.all(8.0),
+                    children: <Widget>[
+                      new Text(i,
+                          style: new TextStyle(
+                              fontSize: 24.0, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center),
-                        for(var p in prog[i])
-                          Container(
-                            height: 200.0,
-                            color: Colors.white,
-                            child: new Center(child: Text(p["package_name"],
-                                style: new TextStyle(fontSize: 24.0))),
+                      for (var p in prog[i])
+                        new Card(
+                          child: new Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              new Container(
+                                child: new Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      new Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: new Container(
+                                              padding: EdgeInsets.all(4.0),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          6.0),
+                                                  color: Colors.blue),
+                                              child: new Text(
+                                                p["fullversion_from"] +
+                                                    "-" +
+                                                    p["fullversion_to"],
+                                                style: TextStyle(
+                                                  fontSize: 14.0,
+                                                  color: Colors.white,
+                                                ),
+                                              ))),
+                                      new Container(
+                                          padding: EdgeInsets.all(4.0),
+                                          child: new Text(
+                                            'Forecast: ${p["actual"]}  days',
+                                            style: TextStyle(
+                                              fontSize: 14.0,
+                                            ),
+                                          ))
+                                    ]),
+                                alignment: FractionalOffset(0.1, 0.1),
+                              ),
+                              new ListTile(
+                                title: new Text(
+                                  p["package_name"],
+                                  style: new TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: new Text(p["version"],
+                                    style: new TextStyle(
+                                        fontSize: 16.0, color: Colors.blue)),
+                              ),
+                              new Container(
+                                  child: new Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                    p["unmanaged_change_count"] > 0
+                                        ? new Container(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: new Image.asset(
+                                              'images/unmanaged_commit.svg'
+                                            ))
+                                        : new Container(),
+                                    new Container(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: new Text(
+                                            'Revisions: ${p["rev_from"]} - ${p["rev_to"]}',
+                                            style: TextStyle(
+                                              fontSize: 14.0,
+                                            )))
+                                  ]))
+                            ],
                           ),
-                      ],
-                    )
+                        ),
+                    ],
+                  )
                   // Text('text $i \n $testData', style: TextStyle(fontSize: 16.0), maxLines: 60)
-                );
-              },
-            );
-          }).toList(),
-        ),
-      );
+                  );
+            },
+          );
+        }).toList(),
+      ),
+    );
   }
 }
