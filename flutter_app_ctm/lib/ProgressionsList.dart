@@ -3,20 +3,22 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class Progressions extends StatefulWidget {
+  final String progId;
   @override
   ProgressionsList createState() => new ProgressionsList();
+
+  Progressions({Key key, this.progId}) : super(key: key);
 }
 
 class ProgressionsList extends State<Progressions> {
   var data = {};
   final String hours = "Hours";
   final String days = "Days";
-
+  var progressionData = {};
   var getProg = {
     "_id": "5cd4cfab2c8f1c37b0828a4a",
     "description": "Creating Progression via automation",
@@ -72,6 +74,7 @@ class ProgressionsList extends State<Progressions> {
     super.initState();
 
     // Call the getJSONData() method when the app initializes
+    this.fetchProgressionData();
     this.fetchProgressionList();
   }
 
@@ -89,12 +92,12 @@ class ProgressionsList extends State<Progressions> {
               ),
               color: Colors.white));
 
-    getProg.forEach((key, value) => {
+    this.progressionData.forEach((key, value) => {
           if (key == 'phases') for (var val in value) array.add(val["name"]),
         });
     return new Scaffold(
       appBar: new AppBar(
-        title: Text('Progressions'),
+        title: Text(this.progressionData["name"]),
       ),
       body: CarouselSlider(
         height: 900.0,
@@ -233,5 +236,22 @@ class ProgressionsList extends State<Progressions> {
       // If that response was not OK, throw an error.
       throw Exception('Failed to load post');
     }
+  }
+
+  Future<String> fetchProgressionData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final instanceUrl = prefs.get("instanceUrl");
+    final token = prefs.get("token");
+    final response = await http.get(
+        instanceUrl+':8080/api/get_progression?progression_id=${widget.progId}',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Token "+token
+        });
+    var progData = json.decode(response.body)['Response'];
+    setState(() {
+      this.progressionData = progData;
+    });
+    return "Success";
   }
 }

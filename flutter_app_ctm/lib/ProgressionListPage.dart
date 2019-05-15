@@ -11,11 +11,13 @@ class ProgressionListPage extends StatefulWidget {
 }
 
 class ProgListPage extends State<ProgressionListPage> {
-  List<String> prog = new List();
+  Map<String, String> prog = new Map();
+  List<String> progNames = new List();
   @override
   Widget build(BuildContext context) {
     final title = 'Progressions';
     fetchProgressionList();
+    progNames.addAll(prog.values);
     return MaterialApp(
       title: title,
       home: Scaffold(
@@ -32,11 +34,11 @@ class ProgListPage extends State<ProgressionListPage> {
                   child: new Column(
                       children: <Widget>[
                         ListTile(
-                          title: Text(this.prog[index]),
+                          title: Text(prog.values.elementAt(index)),
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Progressions()),
+                              MaterialPageRoute(builder: (context) => Progressions(progId: prog.keys.elementAt(index))),
                             );
                           },
                         ),
@@ -61,9 +63,9 @@ class ProgListPage extends State<ProgressionListPage> {
           "Authorization": "Token "+token
         });
     Iterable data = json.decode(response.body)['Response'];
-    List<String> progression = new List();
+    Map<String, String> progression = new Map();
     for (var prog in data) {
-      progression.add(prog["name"]);
+      progression.putIfAbsent(prog["_id"], () => prog["name"]);
     }
     setState(() {
       this.prog = progression;
