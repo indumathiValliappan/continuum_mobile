@@ -21,7 +21,7 @@ class ProgressionListPage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProgressionsList()),
+                  MaterialPageRoute(builder: (context) =>  Progressions()),
                 );
               },
             ),

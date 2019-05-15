@@ -42,7 +42,7 @@ class PendingListPage extends State<MyGetHttpData> {
             else if (value == 'Progressions') {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProgressionsList()),
+                MaterialPageRoute(builder: (context) => new Progressions()),
               );
             }
             else if (value == 'Progression List') {
