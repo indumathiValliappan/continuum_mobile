@@ -20,49 +20,6 @@ class ProgressionsList extends State<Progressions> {
   final String hours = "Hours";
   final String days = "Days";
   var progressionData = {};
-  var getProg = {
-    "_id": "5cd4cfab2c8f1c37b0828a4a",
-    "description": "Creating Progression via automation",
-    "name": "progression936",
-    "phases": [
-      {
-        "code_complete": true,
-        "delivery_category": "Packaged",
-        "description": "Build",
-        "has_dnstream": true,
-        "has_upstream": false,
-        "index": 0,
-        "name": "Build"
-      },
-      {
-        "code_complete": false,
-        "delivery_category": "Packaged",
-        "description": "Development",
-        "has_dnstream": true,
-        "has_upstream": true,
-        "index": 1,
-        "name": "Development"
-      },
-      {
-        "code_complete": false,
-        "delivery_category": "Packaged",
-        "description": "Test",
-        "has_dnstream": true,
-        "has_upstream": true,
-        "index": 2,
-        "name": "QA"
-      },
-      {
-        "code_complete": false,
-        "delivery_category": "Packaged",
-        "description": "Delivery",
-        "has_dnstream": false,
-        "has_upstream": true,
-        "index": 3,
-        "name": "Delivery"
-      }
-    ]
-  };
 
   @override
   void initState() {
