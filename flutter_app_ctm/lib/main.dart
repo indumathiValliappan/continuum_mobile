@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app_ctm/HomePage.dart';
 import 'package:flutter_app_ctm/pendingListPage.dart';
 import 'package:flutter_app_ctm/ProgressionListPage.dart';
 import 'package:http/http.dart' as http;
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
             storeInstanceAndToken(urlController.text, tokenController.text);
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ProgressionListPage()),
+              MaterialPageRoute(builder: (context) => HomePage()),
             );
           } else {
             _scaffoldKey.currentState.showSnackBar(new SnackBar(content: new Text("Invalid instance or token")));

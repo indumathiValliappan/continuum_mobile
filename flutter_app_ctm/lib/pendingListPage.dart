@@ -3,10 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app_ctm/PendingActivity.dart';
-import 'package:flutter_app_ctm/ProgressionsList.dart';
-import 'package:flutter_app_ctm/ProgressionListPage.dart';
 import 'package:flutter_app_ctm/main.dart';
-import 'package:flutter_app_ctm/settings.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,52 +23,23 @@ class PendingListPage extends State<MyGetHttpData> {
           appBar: new AppBar(
             title: new Center(child: new Text('My Activities', textAlign: TextAlign.center)),
               actions: <Widget>[
-      new PopupMenuButton<String>(
-          onSelected: (String value) {
-            if (value == 'Logout') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyApp()),
-              );
-            } else if (value == 'Settings') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
-            }
-            else if (value == 'Progressions') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => new Progressions()),
-              );
-            }
-            else if (value == 'Progression List') {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProgressionListPage()),
-              );
-            }
-          },
-          itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-            const PopupMenuItem<String>(
-                value: 'Logout',
-                child: Text('Logout')
-            ),
-            const PopupMenuItem<String>(
-                value: 'Settings',
-                child: Text('Settings')
-            ),
-            const PopupMenuItem<String>(
-                value: 'Progressions',
-                child: Text('Progressions')
-            ),
-            const PopupMenuItem<String>(
-              value: 'Progression List',
-              child: Text("Progression List")
-            ),
-              ]
-          ),
-          ]),
+                new PopupMenuButton<String>(
+                    onSelected: (String value) {
+                      if (value == 'Logout') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyApp()),
+                        );
+                      }
+                      },
+                    itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+                      const PopupMenuItem<String>(
+                          value: 'Logout',
+                          child: Text('Logout')
+                      ),
+                    ]
+                ),
+              ]),
           // Create a Listview and load the data when available
           body: new ListView.builder(
               itemCount: data == null ? 0 : data.length,
