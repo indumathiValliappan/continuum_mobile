@@ -18,6 +18,18 @@ class ProgListPage extends State<ProgressionListPage> {
     final title = 'Progressions';
     fetchProgressionList();
     progNames.addAll(prog.values);
+    if (prog.length <= 0)
+      return new Scaffold(
+          appBar: AppBar(
+            leading: new Image.asset(
+                'images/v1-logo.png'),
+            title: Text(title),
+          ),
+          body: new Container(
+              constraints: new BoxConstraints.expand(
+                height: 900.0,
+              ),
+              color: Colors.white));
     return MaterialApp(
       title: title,
       home: Scaffold(
@@ -77,5 +89,6 @@ class ProgListPage extends State<ProgressionListPage> {
   @override
   void initState() {
     super.initState();
+    fetchProgressionList();
   }
 }

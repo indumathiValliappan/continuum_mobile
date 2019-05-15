@@ -16,6 +16,7 @@ class Progressions extends StatefulWidget {
 
 class ProgressionsList extends State<Progressions> {
   var data = {};
+  var packages = [];
   final String hours = "Hours";
   final String days = "Days";
   var progressionData = {};
@@ -63,18 +64,13 @@ class ProgressionsList extends State<Progressions> {
     ]
   };
 
-  var packages = [
-    {"_id": "5cd4cff72c8f1c37b0828abb", "name": "package780"},
-    {"_id": "5cda14742c8f1c5c2e2a096e", "name": "package703"},
-    {"_id": "ALL_PACKAGES", "name": "ALL"}
-  ];
-
   @override
   void initState() {
     super.initState();
 
     // Call the getJSONData() method when the app initializes
     this.fetchProgressionData();
+    this.fetchPackagesInProgression();
     this.fetchProgressionList();
   }
 
@@ -92,9 +88,10 @@ class ProgressionsList extends State<Progressions> {
               ),
               color: Colors.white));
 
-    this.progressionData.forEach((key, value) => {
-          if (key == 'phases') for (var val in value) array.add(val["name"]),
-        });
+    this.progressionData.forEach((key, value) =>
+    {
+      if (key == 'phases') for (var val in value) array.add(val["name"]),
+    });
     return new Scaffold(
       appBar: new AppBar(
         title: Text(this.progressionData["name"]),
@@ -107,7 +104,10 @@ class ProgressionsList extends State<Progressions> {
           return Builder(
             builder: (BuildContext context) {
               return Container(
-                  width: MediaQuery.of(context).size.width,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
                   margin: EdgeInsets.symmetric(horizontal: 5.0),
                   decoration: BoxDecoration(color: Colors.white),
                   child: ListView(
@@ -126,7 +126,7 @@ class ProgressionsList extends State<Progressions> {
                                 new Container(
                                   child: new Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         new Padding(
                                             padding: const EdgeInsets.all(16.0),
@@ -134,15 +134,15 @@ class ProgressionsList extends State<Progressions> {
                                                 padding: EdgeInsets.all(4.0),
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                            6.0),
+                                                    BorderRadius.circular(
+                                                        6.0),
                                                     color: Colors.blue),
                                                 child: new Text(
                                                   data[i][pck["_id"]]
-                                                          ["fullversion_from"] +
+                                                  ["fullversion_from"] +
                                                       "-" +
                                                       data[i][pck["_id"]]
-                                                          ["fullversion_to"],
+                                                      ["fullversion_to"],
                                                   style: TextStyle(
                                                     fontSize: 14.0,
                                                     color: Colors.white,
@@ -151,7 +151,16 @@ class ProgressionsList extends State<Progressions> {
                                         new Container(
                                             padding: EdgeInsets.all(4.0),
                                             child: new Text(
-                                              'Forecast: ${data[i][pck["_id"]]["estimated_time_to_delivery"] < 84600 ? (data[i][pck["_id"]]["estimated_time_to_delivery"] / 3600.0).round() : (data[i][pck["_id"]]["estimated_time_to_delivery"] / 86400.0).round()} ${data[i][pck["_id"]]["estimated_time_to_delivery"] > 0 && data[i][pck["_id"]]["estimated_time_to_delivery"] < 84600 ? hours : days}',
+                                              'Forecast: ${data[i][pck["_id"]]["estimated_time_to_delivery"] <
+                                                  84600
+                                                  ? (data[i][pck["_id"]]["estimated_time_to_delivery"] /
+                                                  3600.0).round()
+                                                  : (data[i][pck["_id"]]["estimated_time_to_delivery"] /
+                                                  86400.0)
+                                                  .round()} ${data[i][pck["_id"]]["estimated_time_to_delivery"] >
+                                                  0 &&
+                                                  data[i][pck["_id"]]["estimated_time_to_delivery"] <
+                                                      84600 ? hours : days}',
                                               style: TextStyle(
                                                 fontSize: 14.0,
                                               ),
@@ -173,39 +182,39 @@ class ProgressionsList extends State<Progressions> {
                                 new Container(
                                     child: new Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
-                                      data[i][pck["_id"]]
-                                                  ["unmanaged_change_count"] >
+                                          data[i][pck["_id"]]
+                                          ["unmanaged_change_count"] >
                                               0
-                                          ? new Container(
+                                              ? new Container(
                                               padding: EdgeInsets.all(8.0),
                                               child: new Image.asset(
                                                 'images/unmanaged_commit.png',
                                                 fit: BoxFit.cover,
                                                 alignment: Alignment.center,
                                               ))
-                                          : new Container(),
-                                      new Container(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: new Text(
-                                              'Revisions: ${data[i][pck["_id"]]["rev_from"]} - ${data[i][pck["_id"]]["rev_to"]}',
-                                              style: TextStyle(
-                                                fontSize: 14.0,
-                                              )))
-                                    ]))
+                                              : new Container(),
+                                          new Container(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: new Text(
+                                                  'Revisions: ${data[i][pck["_id"]]["rev_from"]} - ${data[i][pck["_id"]]["rev_to"]}',
+                                                  style: TextStyle(
+                                                    fontSize: 14.0,
+                                                  )))
+                                        ]))
                               ],
                             ),
                           )
                         else
                           new Container(
                               constraints: new BoxConstraints.expand(
-                            height: 167.0,
-                          )),
+                                height: 167.0,
+                              )),
                     ],
                   )
-                  // Text('text $i \n $testData', style: TextStyle(fontSize: 16.0), maxLines: 60)
-                  );
+                // Text('text $i \n $testData', style: TextStyle(fontSize: 16.0), maxLines: 60)
+              );
             },
           );
         }).toList(),
@@ -243,15 +252,41 @@ class ProgressionsList extends State<Progressions> {
     final instanceUrl = prefs.get("instanceUrl");
     final token = prefs.get("token");
     final response = await http.get(
-        instanceUrl+':8080/api/get_progression?progression_id=${widget.progId}',
+        instanceUrl +
+            ':8080/api/get_progression?progression_id=${widget.progId}',
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Token "+token
+          "Authorization": "Token " + token
         });
     var progData = json.decode(response.body)['Response'];
     setState(() {
       this.progressionData = progData;
     });
     return "Success";
+  }
+
+  Future<String> fetchPackagesInProgression() async {
+    final prefs = await SharedPreferences.getInstance();
+    final instanceUrl = prefs.get("instanceUrl");
+    final token = prefs.get("token");
+
+    var response = await http.post(
+        instanceUrl +
+            ':8080/api/get_packages_in_progression?progression_id=5cd4cfab2c8f1c37b0828a4a',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Token " + token,
+        });
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body)['Response'];
+      setState(() {
+        this.packages = data;
+      });
+      return "successful";
+    } else {
+      // If that response was not OK, throw an error.
+      throw Exception('Failed to load post');
+    }
   }
 }
