@@ -17,25 +17,23 @@ class DropDownItems extends State<HomePage> {
     return MaterialApp(
       title: "Dashboard",
       home: Scaffold(
-        appBar: AppBar(title: Text("Dashboard")),
-          body: Column(
+        appBar: AppBar(title: Text("Home"),
+            actions: <Widget>[new IconButton(icon: new Image.asset('images/settings.png'),
+                color: Colors.lightBlue,
+                tooltip: "Settings",
+                onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => LoginPage()));
+            })
+            ]),
+          body: Row(
               children: [
                 Container(
-                    padding: EdgeInsets.only(bottom: 30.0, top: 10.0),
-                    child: IconButton(
-                        icon: new Image.asset('images/progression.png'),
-                        iconSize: 120.0,
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => ProgressionListPage()));
-                        }
-                        )
-                ),
-                Container(
-                    padding: EdgeInsets.only(bottom: 30.0),
+                    padding: EdgeInsets.only(right: 30.0),
                     child: IconButton(
                         icon: new Image.asset('images/pending.png'),
                         iconSize: 120.0,
+                        tooltip: 'Pending Manual Activities',
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(
                               builder: (context) => MyGetHttpData()));
@@ -43,15 +41,16 @@ class DropDownItems extends State<HomePage> {
                     )
                 ),
                 Container(
-                    padding: EdgeInsets.only(bottom: 30.0),
+                    padding: EdgeInsets.only(top: 10.0),
                     child: IconButton(
-                        icon: new Image.asset('images/settings.png'),
+                        icon: new Image.asset('images/progression.png'),
                         iconSize: 120.0,
+                        tooltip: 'Progression Board',
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => LoginPage()));
+                              builder: (context) => ProgressionListPage()));
                         }
-                    )
+                        )
                 ),
               ]
           ),
