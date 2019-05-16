@@ -27,6 +27,10 @@ flutter:
     - images/continuum-logo.jpg
     - images/v1-logo.png
     - images/unmanaged_commit.png
+    - images/red-half-circle.png
+    - images/red-full-circle.png
+    - images/green-half-circle.png
+    - images/green-full-circle.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

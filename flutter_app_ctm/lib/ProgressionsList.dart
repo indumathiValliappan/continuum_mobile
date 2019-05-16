@@ -138,6 +138,24 @@ class ProgressionsList extends State<Progressions> {
                                 ),
                                 new Container(
                                     child: new Row(
+                                        children: <Widget>[
+                                          for (var wi = 0; wi < data[i][pck["_id"]]["workitems"].length; wi ++)
+                                            if (data[i][pck["_id"]]["workitems"][wi]["value_goal"] == 'improve')
+                                              if (data["wi_count_map"].containsKey(data[i][pck["_id"]]["workitems"][wi]["external_key"]) &&
+                                                  (data["wi_count_map"][data[i][pck["_id"]]["workitems"][wi]["external_key"]]) == 1)
+                                                new Image.asset('images/green-full-circle.png')
+                                              else
+                                                new Image.asset('images/green-half-circle.png')
+                                            else if (data[i][pck["_id"]]["workitems"][wi]["value_goal"] == 'maintain')
+                                              if (data["wi_count_map"].containsKey(data[i][pck["_id"]]["workitems"][wi]["external_key"]) &&
+                                                  (data["wi_count_map"][data[i][pck["_id"]]["workitems"][wi]["external_key"]]) == 1)
+                                                new Image.asset('images/red-full-circle.png')
+                                              else
+                                                new Image.asset('images/red-half-circle.png')
+                                        ]
+                                    )),
+                                new Container(
+                                    child: new Row(
                                         mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
@@ -166,11 +184,10 @@ class ProgressionsList extends State<Progressions> {
                         else
                           new Container(
                               constraints: new BoxConstraints.expand(
-                                height: 167.0,
+                                height: 200.0,
                               )),
                     ],
                   )
-                // Text('text $i \n $testData', style: TextStyle(fontSize: 16.0), maxLines: 60)
               );
             },
           );
