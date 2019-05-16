@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app_ctm/ProgressionsList.dart';
+import 'package:flutter_app_ctm/main.dart';
+import 'package:flutter_app_ctm/pendingListPage.dart';
+import 'package:flutter_app_ctm/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,6 +40,42 @@ class ProgListPage extends State<ProgressionListPage> {
           leading: new Image.asset(
               'images/v1-logo.png'),
           title: Text(title),
+          actions: <Widget>[new PopupMenuButton<String>(
+              onSelected: (String value) {
+                if (value == 'Logout') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyApp()),
+                  );
+                }
+                else if (value == 'Settings') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                }
+                else if (value == 'Manual Activity') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyGetHttpData()),
+                  );
+                }
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+                const PopupMenuItem<String>(
+                    value: 'Logout',
+                    child: Text('Logout')
+                ),
+                const PopupMenuItem<String>(
+                    value: 'Settings',
+                    child: Text('Settings')
+                ),
+                const PopupMenuItem<String>(
+                    value: 'Manual Activity',
+                    child: Text('Manual Activity')
+                ),
+              ]
+          ),],
         ),
         body: new ListView.builder(
             itemCount: this.prog == null ? 0 : this.prog.length,

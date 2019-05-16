@@ -3,6 +3,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_app_ctm/ProgressionListPage.dart';
+import 'package:flutter_app_ctm/main.dart';
+import 'package:flutter_app_ctm/pendingListPage.dart';
+import 'package:flutter_app_ctm/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -52,6 +56,44 @@ class ProgressionsList extends State<Progressions> {
     return new Scaffold(
       appBar: new AppBar(
         title: Text(this.progressionData["name"]),
+        actions: <Widget>[
+          new PopupMenuButton<String>(
+              onSelected: (String value) {
+                if (value == 'Logout') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyApp()),
+                  );
+                }
+                else if (value == 'Settings') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                }
+                else if (value == 'Manual Activity') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyGetHttpData()),
+                  );
+                }
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+                const PopupMenuItem<String>(
+                    value: 'Logout',
+                    child: Text('Logout')
+                ),
+                const PopupMenuItem<String>(
+                    value: 'Settings',
+                    child: Text('Settings')
+                ),
+                const PopupMenuItem<String>(
+                    value: 'Manual Activity',
+                    child: Text('Manual Activity')
+                ),
+              ]
+          ),
+        ],
       ),
       body: CarouselSlider(
         height: 900.0,
@@ -203,7 +245,7 @@ class ProgressionsList extends State<Progressions> {
 
     var response = await http.post(
         instanceUrl +
-            ':8080/api/get_progression_phase_data?progression_id=5cd4cfab2c8f1c37b0828a4a',
+            ':8080/api/get_progression_phase_data?progression_id=${widget.progId}',
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           "Authorization": "Token " + token,
@@ -246,7 +288,7 @@ class ProgressionsList extends State<Progressions> {
 
     var response = await http.post(
         instanceUrl +
-            ':8080/api/get_packages_in_progression?progression_id=5cd4cfab2c8f1c37b0828a4a',
+            ':8080/api/get_packages_in_progression?progression_id=${widget.progId}',
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Token " + token,
