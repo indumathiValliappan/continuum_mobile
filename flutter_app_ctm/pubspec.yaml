@@ -31,6 +31,9 @@ flutter:
     - images/red-full-circle.png
     - images/green-half-circle.png
     - images/green-full-circle.png
+    - images/pending.png
+    - images/settings.png
+    - images/progression.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

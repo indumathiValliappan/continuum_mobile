@@ -18,42 +18,44 @@ class DropDownItems extends State<HomePage> {
       title: "Dashboard",
       home: Scaffold(
         appBar: AppBar(title: Text("Dashboard")),
-        body: Scaffold(
-          body: Center(
-            child: DropdownButton<String>(
-              value: dropdownValue,
-              hint: new Text("Select Item"),
-              onChanged: (String newValue) {
-                setState(() {
-                  dropdownValue = newValue;
-                });
-                switch(newValue) {
-                  case "Settings":
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginPage()));
-                    break;
-                  case "Manual Activity":
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyGetHttpData()));
-                    break;
-                  case "Progression Board":
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ProgressionListPage()));
-                    break;
-                }
-                },
-
-              items: <String>['Manual Activity', 'Progression Board', 'Settings']
-                  .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-            ),
+          body: Column(
+              children: [
+                Container(
+                    padding: EdgeInsets.only(bottom: 30.0, top: 10.0),
+                    child: IconButton(
+                        icon: new Image.asset('images/progression.png'),
+                        iconSize: 120.0,
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => ProgressionListPage()));
+                        }
+                        )
+                ),
+                Container(
+                    padding: EdgeInsets.only(bottom: 30.0),
+                    child: IconButton(
+                        icon: new Image.asset('images/pending.png'),
+                        iconSize: 120.0,
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => MyGetHttpData()));
+                        }
+                    )
+                ),
+                Container(
+                    padding: EdgeInsets.only(bottom: 30.0),
+                    child: IconButton(
+                        icon: new Image.asset('images/settings.png'),
+                        iconSize: 120.0,
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => LoginPage()));
+                        }
+                    )
+                ),
+              ]
           ),
         ),
-      ),
     );
   }
 

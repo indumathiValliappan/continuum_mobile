@@ -39,7 +39,8 @@ class ProgressionsList extends State<Progressions> {
   Widget build(BuildContext context) {
     var array = [];
     if (data.keys.length <= 0)
-      return new Scaffold(
+      return new WillPopScope(
+        child: Scaffold(
           appBar: new AppBar(
             title: Text('Progressions'),
           ),
@@ -47,13 +48,14 @@ class ProgressionsList extends State<Progressions> {
               constraints: new BoxConstraints.expand(
                 height: 900.0,
               ),
-              color: Colors.white));
+              color: Colors.white)));
 
     this.progressionData.forEach((key, value) =>
     {
       if (key == 'phases') for (var val in value) array.add(val["name"]),
     });
-    return new Scaffold(
+    return new WillPopScope(
+     child: Scaffold(
       appBar: new AppBar(
         title: Text(this.progressionData["name"]),
         actions: <Widget>[
@@ -235,6 +237,7 @@ class ProgressionsList extends State<Progressions> {
           );
         }).toList(),
       ),
+    )
     );
   }
 

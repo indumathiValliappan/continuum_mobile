@@ -22,23 +22,19 @@ class ProgListPage extends State<ProgressionListPage> {
     fetchProgressionList();
     progNames.addAll(prog.values);
     if (prog.length <= 0)
-      return new Scaffold(
+      return new WillPopScope(
+        child: Scaffold(
           appBar: AppBar(
-            leading: new Image.asset(
-                'images/v1-logo.png'),
             title: Text(title),
           ),
           body: new Container(
               constraints: new BoxConstraints.expand(
                 height: 900.0,
               ),
-              color: Colors.white));
-    return MaterialApp(
-      title: title,
-      home: Scaffold(
+              color: Colors.white)));
+    return new WillPopScope(
+      child: Scaffold(
         appBar: AppBar(
-          leading: new Image.asset(
-              'images/v1-logo.png'),
           title: Text(title),
           actions: <Widget>[new PopupMenuButton<String>(
               onSelected: (String value) {
