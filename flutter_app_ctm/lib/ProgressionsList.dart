@@ -82,16 +82,16 @@ class ProgressionsList extends State<Progressions> {
               },
               itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
                 const PopupMenuItem<String>(
-                    value: 'Logout',
-                    child: Text('Logout')
+                    value: 'Manual Activity',
+                    child: Text('Manual Activity')
                 ),
                 const PopupMenuItem<String>(
                     value: 'Settings',
                     child: Text('Settings')
                 ),
                 const PopupMenuItem<String>(
-                    value: 'Manual Activity',
-                    child: Text('Manual Activity')
+                    value: 'Logout',
+                    child: Text('Logout')
                 ),
               ]
           ),
@@ -187,15 +187,15 @@ class ProgressionsList extends State<Progressions> {
                                             if (data[i][pck["_id"]]["workitems"][wi]["value_goal"] == 'improve')
                                               if (data["wi_count_map"].containsKey(data[i][pck["_id"]]["workitems"][wi]["external_key"]) &&
                                                   (data["wi_count_map"][data[i][pck["_id"]]["workitems"][wi]["external_key"]]) == 1)
-                                                new Image.asset('images/green-full-circle.png')
+                                                new IconButton(icon: Image.asset('images/green-full-circle.png'), tooltip: data[i][pck["_id"]]["workitems"][wi]["title"])
                                               else
-                                                new Image.asset('images/green-half-circle.png')
+                                                new IconButton(icon: Image.asset('images/green-half-circle.png'), tooltip: data[i][pck["_id"]]["workitems"][wi]["title"])
                                             else if (data[i][pck["_id"]]["workitems"][wi]["value_goal"] == 'maintain')
                                               if (data["wi_count_map"].containsKey(data[i][pck["_id"]]["workitems"][wi]["external_key"]) &&
                                                   (data["wi_count_map"][data[i][pck["_id"]]["workitems"][wi]["external_key"]]) == 1)
-                                                new Image.asset('images/red-full-circle.png')
+                                                new IconButton(icon: Image.asset('images/red-full-circle.png'), tooltip: data[i][pck["_id"]]["workitems"][wi]["title"])
                                               else
-                                                new Image.asset('images/red-half-circle.png')
+                                                new IconButton(icon: Image.asset('images/red-half-circle.png'), tooltip: data[i][pck["_id"]]["workitems"][wi]["title"])
                                         ]
                                     )),
                                 new Container(
@@ -208,11 +208,11 @@ class ProgressionsList extends State<Progressions> {
                                               0
                                               ? new Container(
                                               padding: EdgeInsets.all(8.0),
-                                              child: new Image.asset(
+                                              child: new IconButton(icon: Image.asset(
                                                 'images/unmanaged_commit.png',
                                                 fit: BoxFit.cover,
                                                 alignment: Alignment.center,
-                                              ))
+                                              ), tooltip: data[i][pck["_id"]]["unmanaged_change_count"].toString() + "Rogue Commits"))
                                               : new Container(),
                                           new Container(
                                               padding: EdgeInsets.all(8.0),

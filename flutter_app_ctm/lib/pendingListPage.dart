@@ -48,16 +48,16 @@ class PendingListPage extends State<MyGetHttpData> {
                       },
                     itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
                       const PopupMenuItem<String>(
-                          value: 'Logout',
-                          child: Text('Logout')
+                          value: 'Progressions',
+                          child: Text('Progressions')
                       ),
                       const PopupMenuItem<String>(
                           value: 'Settings',
                           child: Text('Settings')
                       ),
                       const PopupMenuItem<String>(
-                          value: 'Progressions',
-                          child: Text('Progressions')
+                          value: 'Logout',
+                          child: Text('Logout')
                       ),
                     ]
                 ),

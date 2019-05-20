@@ -18,8 +18,7 @@ class DropDownItems extends State<HomePage> {
       title: "Dashboard",
       home: Scaffold(
         appBar: AppBar(title: Text("Home"),
-            actions: <Widget>[new IconButton(icon: new Image.asset('images/settings.png'),
-                color: Colors.lightBlue,
+            actions: <Widget>[new IconButton(icon: new Icon(Icons.settings),
                 tooltip: "Settings",
                 onPressed: () {
               Navigator.push(context, MaterialPageRoute(
@@ -29,28 +28,34 @@ class DropDownItems extends State<HomePage> {
           body: Row(
               children: [
                 Container(
-                    padding: EdgeInsets.only(right: 30.0),
-                    child: IconButton(
-                        icon: new Image.asset('images/pending.png'),
-                        iconSize: 120.0,
-                        tooltip: 'Pending Manual Activities',
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => MyGetHttpData()));
-                        }
-                    )
-                ),
+                  padding: EdgeInsets.only(left:10.0,right: 20.0),
+                    child: Column(
+                        children: <Widget>[
+                          IconButton(
+                              icon: new Image.asset('images/pending.png'),
+                              iconSize: 120.0,
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => MyGetHttpData()));
+                              }
+                              ),
+                          Text("Pending Manual Activities", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0))
+                        ]
+                    )),
                 Container(
-                    padding: EdgeInsets.only(top: 10.0),
-                    child: IconButton(
-                        icon: new Image.asset('images/progression.png'),
-                        iconSize: 120.0,
-                        tooltip: 'Progression Board',
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => ProgressionListPage()));
-                        }
-                        )
+                    child: Column(
+                        children: <Widget>[
+                          IconButton(
+                            icon: new Image.asset('images/progression.png'),
+                              iconSize: 120.0,
+                              onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => ProgressionListPage()));
+                            }
+                            ),
+                          Text("Progression Board", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0))
+                        ]
+                    )
                 ),
               ]
           ),

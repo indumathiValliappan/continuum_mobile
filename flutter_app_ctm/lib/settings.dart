@@ -47,16 +47,16 @@ class _LoginPageState extends State<LoginPage> {
             },
             itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
               const PopupMenuItem<String>(
-                  value: 'Logout',
-                  child: Text('Logout')
+                  value: 'Manual Activity',
+                  child: Text('Manual Activity')
               ),
               const PopupMenuItem<String>(
                   value: 'Progressions',
                   child: Text('Progressions')
               ),
               const PopupMenuItem<String>(
-                  value: 'Manual Activity',
-                  child: Text('Manual Activity')
+                  value: 'Logout',
+                  child: Text('Logout')
               ),
             ]
         ),],

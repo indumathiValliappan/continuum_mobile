@@ -59,16 +59,16 @@ class ProgListPage extends State<ProgressionListPage> {
               },
               itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
                 const PopupMenuItem<String>(
-                    value: 'Logout',
-                    child: Text('Logout')
+                    value: 'Manual Activity',
+                    child: Text('Manual Activity')
                 ),
                 const PopupMenuItem<String>(
                     value: 'Settings',
                     child: Text('Settings')
                 ),
                 const PopupMenuItem<String>(
-                    value: 'Manual Activity',
-                    child: Text('Manual Activity')
+                    value: 'Logout',
+                    child: Text('Logout')
                 ),
               ]
           ),],
